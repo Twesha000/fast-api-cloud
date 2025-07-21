@@ -17,7 +17,7 @@ def get_connection():
 
 # --- Upload Endpoint ---
 @app.post("/upload-payload", tags=['Up Load'])
-def upload_payload(payload: Dict[str, Any] = Body(example={"input":"data","params":"data","output":"data","time":"data"})):
+def upload_payload(payload: Dict[str, Any]):
     data = payload
     con = get_connection()
     cursor = con.cursor()
