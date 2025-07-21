@@ -3,12 +3,6 @@ from pydantic import BaseModel # pyright: ignore[reportMissingImports]
 from typing import List, Dict, Any, Optional # pyright: ignore[reportMissingImports]
 import mysql.connector # pyright: ignore[reportMissingImports]
 
-class Item(BaseModel):
-    input: str
-    params: str | None = None
-    output: str
-    time: str
-    
 app = FastAPI()
 
 # --- Database Connection ---
@@ -23,7 +17,7 @@ def get_connection():
 
 # --- Upload Endpoint ---
 @app.post("/upload-payload", tags=['Up Load'])
-def upload_payload(payload: Dict[str, Any]):
+def upload_payload(payload: Dict[str, Any] = Body(example={"input":"data","params":"data","output":"data","time":"data"})):
     data = payload
     con = get_connection()
     cursor = con.cursor()
@@ -48,7 +42,6 @@ def upload_payload(payload: Dict[str, Any]):
     finally:
         cursor.close()
         con.close()
-        return Item
 
 
 if __name__ == "__main__":
